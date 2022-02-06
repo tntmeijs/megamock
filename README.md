@@ -20,8 +20,8 @@ include a MongoDB Docker container in the `docker-compose.yaml` file. Feel free 
 suits your project's needs. 😊
 
 To run MegaMock, simply fire up a terminal instance and navigate to the project's root directory. Once in the root
-directory, run `docker compose up -d` to start MegaMock and its accompanying MongoDB instance. By default, MegaMock will
-be exposed on port `8080` using `/megamock` as its context path. This means that you will be able to interact with the
-application by navigating to `<container url>:8080/megamock`.
+directory, run `docker compose up -d --build` to start MegaMock and its accompanying MongoDB instance. By default, MegaMock will
+be exposed on port `19980`. This means that you will be able to interact with the application by navigating to
+`<container url>:19980/megamock`.
 
 Happy mocking! 🤡

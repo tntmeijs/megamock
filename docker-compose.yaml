@@ -3,6 +3,6 @@ services:
   megamock:
     build: .
     ports:
-      - "8080:8080"
+      - "19980:8080"
   mongodb:
     image: "mongo:5.0.6"

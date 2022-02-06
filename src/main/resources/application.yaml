@@ -6,7 +6,3 @@ spring:
       host: localhost
       port: 27017
       database: ${spring.application.name}
-
-server:
-  servlet:
-    context-path: /${spring.application.name}
