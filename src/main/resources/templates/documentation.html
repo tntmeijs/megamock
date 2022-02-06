@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+    <div class="container">
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+        <div class="content">
+            <h2 class="title">Getting started</h2>
+            <p>
+                Welcome to Mega Mock - your one-stop-shop for all your API mocking needs! 😊
+            </p>
+            <p>
+                Getting started with Mega Mock is super easy. Simply click the big "add mock" button in the
+                navigation
+                bar to create your first mock.
+            </p>
+
+            <h2 class="title">Features</h2>
+            <p>Mega Mock supports the following features:</p>
+            <ul>
+                <li>Nothing yet - please check back later 🤣</li>
+            </ul>
+
+            <p>These features have been planned:</p>
+            <ul>
+                <li>Endpoint mocking</li>
+                <li>Security mocking (tokens, HTTP basic, etc.)</li>
+                <li>"Team Rocket" chaos functionality to test your application's resilience</li>
+                <li>Configurable endpoint response time</li>
+                <li>Import OpenAPI specifications</li>
+                <li>Insights and statistics</li>
+            </ul>
+
+            <h2 class="title">Frequently asked questions</h2>
+            <blockquote>What is a "mock"?</blockquote>
+            <p>
+                Mocking something can mean a bunch of different things. However, within Mega Mock, when we refer to
+                "mocks" we mean a fake API endpoint. Whenever you work on a new microservice or a proof of concept,
+                you
+                often have to rely upon third-party APIs and integrations.
+            </p>
+            <p>
+
+                Because of how things work in software development, it is not always possible to immediately use a
+                third-party endpoint. Maybe your team is still waiting for someone else to finish their work. Or it
+                could be that your manager forgot to request a new API key for your team.
+            </p>
+            <p>
+                In any case, your team is blocked. This is where Mega Mock can help you out. Instead of waiting
+                around
+                hoping someone will unblock your team, simply fire up Mega Mock and create the endpoints you need
+                yourself!
+            </p>
+            <p>
+                Obviously the data returned from the endpoints will be fake, but it will at least allow your team to
+                keep moving without having to wait for others to do their jobs. This is what we mean with mocking:
+                you
+                fake an API's response yourself.
+            </p>
+
+            <blockquote class="mt-6">Can I use Mega Mock for integration tests?</blockquote>
+            <p>
+                Absolutely! Mega Mock is actually super useful for integration tests. It eliminates the need to rely
+                upon external parties when testing your services.
+            </p>
+
+            <blockquote class="mt-6">
+                What about testing unreliable connections? Does Mega Mock allow us to mock failures?
+            </blockquote>
+            <p>
+                Sure does! Mega Mock includes a so-called "Team Rocket" feature. Enabling this functionality will
+                cause Mega Mock to mess with your connections by randomly disconnecting or delaying your responses.
+                All this behaviour can be configured to fit your project's needs.
+            </p>
+
+            <blockquote class="mt-6">Is Mega Mock free to use for commercial purposes?</blockquote>
+            <p>
+                It sure is! Mega Mock has been made with lots of ♥ by <a href="https://tahar.dev" target="_blank">Tahar
+                    Meijs</a> for the open-source community. Please use this application to
+                improve your day-to-day job. 😊
+            </p>
+            <p>
+                Mega Mock has been licensed using the very permissive <a
+                    href="https://github.com/tntmeijs/megamock/LICENSE" target="_blank">MIT license</a>.
+            </p>
+            <p>
+                If you enjoy Mega Mock and would like to support a follow software engineer, please consider
+                supporting me on <a href="https://github.com/tntmeijs" target="_blank">GitHub</a> or by contributing
+                to this project. It takes a lot of effort to make these kind of projects in my spare time, so any
+                support is much appreciated. 🤗
+            </p>
+
+            <blockquote class="mt-6">Where can I ask for help when I run into issues?</blockquote>
+            <p>
+                Please make use of this project's <a href="https://github.com/tntmeijs/megamock/issues"
+                    target="_blank">issue tracker</a>. I will do my best to respond to any questions or bugs in a
+                timely fashion. But since I do not get paid to work on open-source software, it may take a little
+                bit of time before I can get back to you.
+            </p>
+        </div>
+    </div>
+
+    <script th:replace="fragments/navbar :: navbar-menu"></script>
+</body>
+
+</html>
