@@ -15,36 +15,31 @@
     <div class="container">
         <div th:replace="fragments/navbar :: navbar"></div>
 
-        <div class="columns">
-            <div class="column"></div>
-            <div class="column is-half notification is-danger" th:if="${#lists.isEmpty(mocks)}">
-                <h3 class="title">Whoops, no mocks for you! 🙃</h3>
-                <p>
-                    It looks like no mocks were found. This could be caused by a variety of things, but chances are
-                    that you simply forgot to add mocks to your database. Maybe try
-                    <a href="/mocks/new">adding a mock?</a>
-                </p>
-            </div>
-            <div class="column"></div>
+        <div class="notification is-danger" th:if="${data.isEmpty()}">
+            <h3 class="title">Whoops, no mocks for you! 🙃</h3>
+            <p>
+                It looks like no mocks were found. This could be caused by a variety of things, but chances are
+                that you simply forgot to add mocks to your database. Maybe try
+                <a href="/mocks/new">adding a mock?</a>
+            </p>
         </div>
 
-        <div class="table-container" th:unless="${#lists.isEmpty(mocks)}">
-            <table class="table is-striped is-hoverable is-fullwidth">
+        <div class="table-container" th:unless="${data.isEmpty()}">
+            <table th:each="entry : ${data}" class="table is-striped is-hoverable is-fullwidth">
+                <h3 class="title is-capitalized" th:text="${entry.key}"></h3>
                 <thead>
                     <tr>
                         <th>Method</th>
                         <th>Name</th>
                         <th>Endpoint</th>
-                        <th>Category</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="mock : ${mocks}">
+                    <tr th:each="mock : ${entry.value}">
                         <td class="is-uppercase" th:text="${mock.method}">post</td>
                         <td class="is-capitalized" th:text="${mock.name}">placeholder mock name</td>
                         <td class="is-lowercase" th:text="${mock.endpoint}">/v1/mock/placeholder</td>
-                        <td class="is-lowercase" th:text="${mock.category}">thymeleaf</td>
                         <td>
                             <a th:href="@{/mocks/{id}/delete(id=${mock.id})}">delete</a>
                         </td>

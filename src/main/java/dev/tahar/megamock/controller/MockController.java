@@ -1,7 +1,9 @@
 package dev.tahar.megamock.controller;
 
+import dev.tahar.megamock.model.MockInfo;
 import dev.tahar.megamock.model.payload.AddNewMockEndpointForm;
 import dev.tahar.megamock.utility.StringUtils;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,17 +14,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
 public final class MockController {
 
-    private final static String TEMPLATE_MOCKS = "mocks";
-    private final static String TEMPLATE_ADD_NEW_MOCK = "mocks-new";
+    private static final String TEMPLATE_MOCKS = "mocks";
+    private static final String TEMPLATE_ADD_NEW_MOCK = "mocks-new";
+    private static final String DEFAULT_CATEGORY_NAME = "uncategorized";
 
     // Only for debugging purposes
-    private final List<AddNewMockEndpointForm> inMemoryStorage = new ArrayList<>();
+    private final List<MockInfo> inMemoryStorage = new ArrayList<>();
 
     /**
      * Returns the homepage HTML file called "mocks.html"
@@ -30,8 +34,14 @@ public final class MockController {
      * @return Name of the template to render
      */
     @GetMapping("mocks")
-    private String mocks(final Model model) {
-        model.addAttribute("mocks", inMemoryStorage);
+    public String mocks(final Model model) {
+        final var mocksGroupedByCategory = new HashMap<String, List<MockInfo>>();
+
+        inMemoryStorage.forEach(mock -> mocksGroupedByCategory
+                .computeIfAbsent(mock.getCategory(), s -> new ArrayList<>())
+                .add(mock));
+
+        model.addAttribute("data", mocksGroupedByCategory);
         return TEMPLATE_MOCKS;
     }
 
@@ -42,7 +52,7 @@ public final class MockController {
      * @return Name of the template to render
      */
     @GetMapping("mocks/new")
-    private String newMock(final Model model) {
+    public String newMock(final Model model) {
         model.addAttribute("data", new AddNewMockEndpointForm());
         return TEMPLATE_ADD_NEW_MOCK;
     }
@@ -55,13 +65,24 @@ public final class MockController {
      * @return Name of the template to render
      */
     @PostMapping("mocks/new")
-    private String newMockSubmit(@Valid @ModelAttribute(name = "data") final AddNewMockEndpointForm data, final BindingResult bindingResult) {
+    public String newMockSubmit(@Valid @ModelAttribute(name = "data") final AddNewMockEndpointForm data, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return TEMPLATE_ADD_NEW_MOCK;
         }
 
+        final var httpMethod = HttpMethod.resolve(data.getMethod().toUpperCase());
+
         // Store endpoint
-        inMemoryStorage.add(data);
+        if (httpMethod != null) {
+            inMemoryStorage.add(new MockInfo(
+                    data.getId(),
+                    data.getName(),
+                    data.getCategory() == null || data.getCategory().isBlank()
+                            ? DEFAULT_CATEGORY_NAME
+                            : data.getCategory(),
+                    data.getEndpoint(),
+                    httpMethod));
+        }
 
         // Back to the main mocking overview
         return StringUtils.formatEndpointAsRedirect("/mocks");
@@ -74,7 +95,7 @@ public final class MockController {
      * @return Name of the template to render
      */
     @GetMapping("mocks/{id}/delete")
-    private String deleteMockById(@PathVariable UUID id) {
+    public String deleteMockById(@PathVariable UUID id) {
         inMemoryStorage.removeIf(entry -> entry.getId().equals(id));
 
         // Back to the main mocking overview
