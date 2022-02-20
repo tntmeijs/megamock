@@ -18,12 +18,18 @@
         <table>
             <thead>
                 <tr>
-                    <th>Path</th>
+                    <th>Method</th>
+                    <th>Name</th>
+                    <th>Endpoint</th>
+                    <th>Category</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="mock : ${mocks}">
+                    <td th:text="${mock.method}"></td>
+                    <td th:text="${mock.name}"></td>
                     <td th:text="${mock.endpoint}"></td>
+                    <td th:text="${mock.category}"></td>
                 </tr>
             </tbody>
         </table>

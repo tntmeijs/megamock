@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Add New Mock - Mega Mock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/styles/main.css}">
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+        <form action="#" th:action="@{/mocks/new}" th:object="${data}" method="post">
+            <div class="box">
+                <div class="field is-grouped">
+                    <div class="control is-expanded">
+                        <input class="input" th:field="*{name}" type="text" placeholder="Name">
+                    </div>
+                    <div class="control">
+                        <input class="input" th:field="*{category}" type="text" placeholder="Category">
+                    </div>
+                </div>
+
+                <div class="field has-addons">
+                    <div class="control is-narrow">
+                        <div class="select is-fullwidth">
+                            <select class="http-method-select" th:field="*{method}">
+                                <option value="get">GET</option>
+                                <option value="head">HEAD</option>
+                                <option value="post">POST</option>
+                                <option value="put">PUT</option>
+                                <option value="delete">DELETE</option>
+                                <option value="connect">CONNECT</option>
+                                <option value="options">OPTIONS</option>
+                                <option value="trace">TRACE</option>
+                                <option value="patch">PATCH</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control is-expanded">
+                        <input class="input" th:field="*{endpoint}" type="text" placeholder="/endpoint/path/here">
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link" type="submit">Submit</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-light">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

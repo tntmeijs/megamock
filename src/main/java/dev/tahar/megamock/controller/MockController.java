@@ -1,14 +1,20 @@
 package dev.tahar.megamock.controller;
 
-import dev.tahar.megamock.model.MockInfo;
+import dev.tahar.megamock.model.payload.NewMockData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Controller()
+@Controller
 public final class MockController {
+
+    // Only for debugging purposes
+    private final List<NewMockData> inMemoryStorage = new ArrayList<>();
 
     /**
      * Returns the homepage HTML file called "mocks.html"
@@ -17,12 +23,20 @@ public final class MockController {
      */
     @GetMapping("mocks")
     private String mocks(final Model model) {
-        model.addAttribute("mocks", List.of(
-                new MockInfo("/v1/hello/world"),
-                new MockInfo("/v2/hello/world"),
-                new MockInfo("/v3/hello/world")));
-
+        model.addAttribute("mocks", inMemoryStorage);
         return "mocks";
+    }
+
+    @GetMapping("mocks/new")
+    private String newMock(final Model model) {
+        model.addAttribute("data", new NewMockData());
+        return "mocks-new";
+    }
+
+    @PostMapping("mocks/new")
+    private String newMockSubmit(@ModelAttribute(name = "data") final NewMockData data, final Model model) {
+        inMemoryStorage.add(data);
+        return "redirect:/mocks";
     }
 
 }
