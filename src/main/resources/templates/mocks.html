@@ -18,12 +18,11 @@
         <div class="columns">
             <div class="column"></div>
             <div class="column is-half notification is-danger" th:if="${#lists.isEmpty(mocks)}">
-                <h3 class="title">Something went wrong 🙃</h3>
+                <h3 class="title">Whoops, no mocks for you! 🙃</h3>
                 <p>
                     It looks like no mocks were found. This could be caused by a variety of things, but chances are
-                    that
-                    you
-                    simply forgot to add mocks to your database. Maybe try <a href="/mocks/new">adding a mock?</a>
+                    that you simply forgot to add mocks to your database. Maybe try
+                    <a href="/mocks/new">adding a mock?</a>
                 </p>
             </div>
             <div class="column"></div>
@@ -37,6 +36,7 @@
                         <th>Name</th>
                         <th>Endpoint</th>
                         <th>Category</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +45,9 @@
                         <td class="is-capitalized" th:text="${mock.name}">placeholder mock name</td>
                         <td class="is-lowercase" th:text="${mock.endpoint}">/v1/mock/placeholder</td>
                         <td class="is-lowercase" th:text="${mock.category}">thymeleaf</td>
+                        <td>
+                            <a th:href="@{/mocks/{id}/delete(id=${mock.id})}">delete</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

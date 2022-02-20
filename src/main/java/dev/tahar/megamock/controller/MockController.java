@@ -7,11 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public final class MockController {
@@ -60,6 +62,20 @@ public final class MockController {
 
         // Store endpoint
         inMemoryStorage.add(data);
+
+        // Back to the main mocking overview
+        return StringUtils.formatEndpointAsRedirect("/mocks");
+    }
+
+    /**
+     * Endpoint to remove existing mocks
+     *
+     * @param id Unique ID of the mock that should be removed
+     * @return Name of the template to render
+     */
+    @GetMapping("mocks/{id}/delete")
+    private String deleteMockById(@PathVariable UUID id) {
+        inMemoryStorage.removeIf(entry -> entry.getId().equals(id));
 
         // Back to the main mocking overview
         return StringUtils.formatEndpointAsRedirect("/mocks");
