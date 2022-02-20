@@ -41,6 +41,8 @@
                         <td class="is-capitalized" th:text="${mock.name}">placeholder mock name</td>
                         <td class="is-lowercase" th:text="${mock.endpoint}">/v1/mock/placeholder</td>
                         <td>
+                            <a th:href="@{/mocks/{id}(id=${mock.id})}">manage</a>
+                            /
                             <a th:href="@{/mocks/{id}/delete(id=${mock.id})}">delete</a>
                         </td>
                     </tr>

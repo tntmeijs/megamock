@@ -23,6 +23,8 @@ public final class MockController {
 
     private static final String TEMPLATE_MOCKS = "mocks";
     private static final String TEMPLATE_ADD_NEW_MOCK = "mocks-new";
+    private static final String TEMPLATE_MOCK_INFO = "mock-info";
+
     private static final String DEFAULT_CATEGORY_NAME = "uncategorized";
 
     // Only for debugging purposes
@@ -100,6 +102,25 @@ public final class MockController {
 
         // Back to the main mocking overview
         return StringUtils.formatEndpointAsRedirect("/mocks");
+    }
+
+    /**
+     * Returns a page with more detailed information about a mock
+     *
+     * @param id Mock ID
+     * @return Name of the template to render
+     */
+    @GetMapping("mocks/{id}")
+    public String viewMockInfo(@PathVariable UUID id, final Model model) {
+        final var mock = inMemoryStorage
+                .stream()
+                .filter(mockInfo -> mockInfo.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+
+        model.addAttribute("data", mock);
+
+        return TEMPLATE_MOCK_INFO;
     }
 
 }
