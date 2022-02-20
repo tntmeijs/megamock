@@ -1,42 +1,68 @@
 package dev.tahar.megamock.controller;
 
-import dev.tahar.megamock.model.payload.NewMockData;
+import dev.tahar.megamock.model.payload.AddNewMockEndpointForm;
+import dev.tahar.megamock.utility.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public final class MockController {
 
+    private final static String TEMPLATE_MOCKS = "mocks";
+    private final static String TEMPLATE_ADD_NEW_MOCK = "mocks-new";
+
     // Only for debugging purposes
-    private final List<NewMockData> inMemoryStorage = new ArrayList<>();
+    private final List<AddNewMockEndpointForm> inMemoryStorage = new ArrayList<>();
 
     /**
      * Returns the homepage HTML file called "mocks.html"
      *
-     * @return Name of the mocks' HTML file
+     * @return Name of the template to render
      */
     @GetMapping("mocks")
     private String mocks(final Model model) {
         model.addAttribute("mocks", inMemoryStorage);
-        return "mocks";
+        return TEMPLATE_MOCKS;
     }
 
+    /**
+     * Returns the page used to create new endpoint mocks
+     *
+     * @param model Contains all data necessary to render the view
+     * @return Name of the template to render
+     */
     @GetMapping("mocks/new")
     private String newMock(final Model model) {
-        model.addAttribute("data", new NewMockData());
-        return "mocks-new";
+        model.addAttribute("data", new AddNewMockEndpointForm());
+        return TEMPLATE_ADD_NEW_MOCK;
     }
 
+    /**
+     * Endpoint that receives data from the new mock form
+     *
+     * @param data          Form data
+     * @param bindingResult Validation errors
+     * @return Name of the template to render
+     */
     @PostMapping("mocks/new")
-    private String newMockSubmit(@ModelAttribute(name = "data") final NewMockData data, final Model model) {
+    private String newMockSubmit(@Valid @ModelAttribute(name = "data") final AddNewMockEndpointForm data, final BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TEMPLATE_ADD_NEW_MOCK;
+        }
+
+        // Store endpoint
         inMemoryStorage.add(data);
-        return "redirect:/mocks";
+
+        // Back to the main mocking overview
+        return StringUtils.formatEndpointAsRedirect("/mocks");
     }
 
 }

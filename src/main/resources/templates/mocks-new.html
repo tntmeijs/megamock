@@ -19,10 +19,14 @@
             <div class="box">
                 <div class="field is-grouped">
                     <div class="control is-expanded">
-                        <input class="input" th:field="*{name}" type="text" placeholder="Name">
+                        <input class="input" th:errorclass="is-danger" th:field="*{name}" type="text"
+                            placeholder="Name">
+                        <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
                     </div>
                     <div class="control">
-                        <input class="input" th:field="*{category}" type="text" placeholder="Category">
+                        <input class="input" th:errorclass="is-danger" th:field="*{category}" type="text"
+                            placeholder="Category (optional)">
+                        <p th:if="${#fields.hasErrors('category')}" class="help is-danger" th:errors="*{category}"></p>
                     </div>
                 </div>
 
@@ -43,7 +47,9 @@
                         </div>
                     </div>
                     <div class="control is-expanded">
-                        <input class="input" th:field="*{endpoint}" type="text" placeholder="/endpoint/path/here">
+                        <input class="input" th:errorclass="is-danger" th:field="*{endpoint}" type="text"
+                            placeholder="/endpoint/path/here">
+                        <p th:if="${#fields.hasErrors('endpoint')}" class="help is-danger" th:errors="*{endpoint}"></p>
                     </div>
                 </div>
 
@@ -52,7 +58,7 @@
                         <button class="button is-link" type="submit">Submit</button>
                     </div>
                     <div class="control">
-                        <button class="button is-link is-light">Cancel</button>
+                        <a class="button is-link is-light" href="/mocks">Cancel</a>
                     </div>
                 </div>
             </div>
