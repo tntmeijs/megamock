@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <title>Mocks - Mega Mock</title>
@@ -20,7 +20,8 @@
             <div class="column is-half notification is-danger" th:if="${#lists.isEmpty(mocks)}">
                 <h3 class="title">Something went wrong 🙃</h3>
                 <p>
-                    It looks like no mocks were found. This could be caused by a variety of things, but chances are that
+                    It looks like no mocks were found. This could be caused by a variety of things, but chances are
+                    that
                     you
                     simply forgot to add mocks to your database. Maybe try <a href="/mocks/new">adding a mock?</a>
                 </p>
@@ -48,6 +49,8 @@
                 </tbody>
             </table>
         </div>
+
+        <div th:replace="fragments/footer :: footer"></div>
     </div>
 </body>
 

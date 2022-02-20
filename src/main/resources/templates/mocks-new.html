@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <title>Add New Mock - Mega Mock</title>
@@ -26,7 +26,8 @@
                     <div class="control">
                         <input class="input" th:errorclass="is-danger" th:field="*{category}" type="text"
                             placeholder="Category (optional)">
-                        <p th:if="${#fields.hasErrors('category')}" class="help is-danger" th:errors="*{category}"></p>
+                        <p th:if="${#fields.hasErrors('category')}" class="help is-danger" th:errors="*{category}">
+                        </p>
                     </div>
                 </div>
 
@@ -49,7 +50,8 @@
                     <div class="control is-expanded">
                         <input class="input" th:errorclass="is-danger" th:field="*{endpoint}" type="text"
                             placeholder="/endpoint/path/here">
-                        <p th:if="${#fields.hasErrors('endpoint')}" class="help is-danger" th:errors="*{endpoint}"></p>
+                        <p th:if="${#fields.hasErrors('endpoint')}" class="help is-danger" th:errors="*{endpoint}">
+                        </p>
                     </div>
                 </div>
 
@@ -63,6 +65,8 @@
                 </div>
             </div>
         </form>
+
+        <div th:replace="fragments/footer :: footer"></div>
     </div>
 </body>
 
