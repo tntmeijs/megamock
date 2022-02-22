@@ -1,4 +1,4 @@
-package dev.tahar.megamock.model.payload;
+package dev.tahar.megamock.mocking;
 
 import lombok.Data;
 

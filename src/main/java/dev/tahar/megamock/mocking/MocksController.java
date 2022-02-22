@@ -1,7 +1,5 @@
-package dev.tahar.megamock.controller;
+package dev.tahar.megamock.mocking;
 
-import dev.tahar.megamock.model.MockInfo;
-import dev.tahar.megamock.model.payload.AddNewMockEndpointForm;
 import dev.tahar.megamock.utility.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-public final class MockController {
+public final class MocksController {
 
     private static final String TEMPLATE_MOCKS = "mocks";
     private static final String TEMPLATE_ADD_NEW_MOCK = "mocks-new";

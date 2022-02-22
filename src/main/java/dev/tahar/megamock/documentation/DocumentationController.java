@@ -1,4 +1,4 @@
-package dev.tahar.megamock.controller;
+package dev.tahar.megamock.documentation;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
