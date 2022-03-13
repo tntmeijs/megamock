@@ -37,8 +37,8 @@
                 </thead>
                 <tbody>
                     <tr th:each="mock : ${entry.value}">
-                        <td class="is-uppercase" th:text="${mock.method}">post</td>
-                        <td class="is-capitalized" th:text="${mock.name}">placeholder mock name</td>
+                        <td class="is-uppercase" th:text="${mock.httpMethod}">post</td>
+                        <td class="is-capitalized" th:text="${mock.title}">placeholder mock name</td>
                         <td class="is-lowercase" th:text="${mock.endpoint}">/v1/mock/placeholder</td>
                         <td>
                             <a th:href="@{/mocks/{id}(id=${mock.id})}">manage</a>

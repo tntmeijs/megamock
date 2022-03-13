@@ -1,6 +1,9 @@
 package dev.tahar.megamock.mocking;
 
+import dev.tahar.megamock.mocking.data.MockInfo;
+import dev.tahar.megamock.mocking.storage.MockStorageService;
 import dev.tahar.megamock.utility.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
+@RequiredArgsConstructor
 public final class MocksController {
 
     private static final String TEMPLATE_MOCKS = "mocks";
@@ -25,8 +29,7 @@ public final class MocksController {
 
     private static final String DEFAULT_CATEGORY_NAME = "uncategorized";
 
-    // Only for debugging purposes
-    private final List<MockInfo> inMemoryStorage = new ArrayList<>();
+    private final MockStorageService mockStorageService;
 
     /**
      * Returns the homepage HTML file called "mocks.html"
@@ -37,9 +40,11 @@ public final class MocksController {
     public String mocks(final Model model) {
         final var mocksGroupedByCategory = new HashMap<String, List<MockInfo>>();
 
-        inMemoryStorage.forEach(mock -> mocksGroupedByCategory
-                .computeIfAbsent(mock.getCategory(), s -> new ArrayList<>())
-                .add(mock));
+        mockStorageService
+                .getAllMocks()
+                .forEach(mock -> mocksGroupedByCategory
+                        .computeIfAbsent(mock.getCategory(), s -> new ArrayList<>())
+                        .add(mock));
 
         model.addAttribute("data", mocksGroupedByCategory);
         return TEMPLATE_MOCKS;
@@ -74,7 +79,7 @@ public final class MocksController {
 
         // Store endpoint
         if (httpMethod != null) {
-            inMemoryStorage.add(new MockInfo(
+            mockStorageService.storeMock(new MockInfo(
                     data.getId(),
                     data.getName(),
                     data.getCategory() == null || data.getCategory().isBlank()
@@ -96,7 +101,7 @@ public final class MocksController {
      */
     @GetMapping("mocks/{id}/delete")
     public String deleteMockById(@PathVariable UUID id) {
-        inMemoryStorage.removeIf(entry -> entry.getId().equals(id));
+        mockStorageService.removeMockWithId(id);
 
         // Back to the main mocking overview
         return StringUtils.formatEndpointAsRedirect("/mocks");
@@ -110,12 +115,7 @@ public final class MocksController {
      */
     @GetMapping("mocks/{id}")
     public String viewMockInfo(@PathVariable UUID id, final Model model) {
-        final var mock = inMemoryStorage
-                .stream()
-                .filter(mockInfo -> mockInfo.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-
+        final var mock = mockStorageService.getMockWithId(id).orElse(null);
         model.addAttribute("data", mock);
 
         return TEMPLATE_MOCK_INFO;

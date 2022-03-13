@@ -3,7 +3,7 @@
 
 <head>
     <title th:if="${data == null}">Mock not found! - Mega Mock</title>
-    <title th:unless="${data == null}" th:text="${data.name + ' - Mega Mock'}"></title>
+    <title th:unless="${data == null}" th:text="${data.title + ' - Mega Mock'}"></title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
@@ -26,7 +26,7 @@
         </div>
 
         <div th:unless="${data == null}">
-            <h3 class="title" th:text="${data.name}"></h3>
+            <h3 class="title" th:text="${data.title}"></h3>
 
             <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
@@ -42,11 +42,11 @@
                     </tr>
                     <tr>
                         <td>name</td>
-                        <td th:text="${data.name}"></td>
+                        <td th:text="${data.title}"></td>
                     </tr>
                     <tr>
                         <td>HTTP method</td>
-                        <td th:text="${data.method}"></td>
+                        <td th:text="${data.httpMethod}"></td>
                     </tr>
                     <tr>
                         <td>category</td>
